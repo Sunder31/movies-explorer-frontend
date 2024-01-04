@@ -1,0 +1,96 @@
+.auth-header {
+    display: flex;
+    width: 100%;
+    padding: 18px 70px;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.auth-header_main {
+    background-color: #073042;
+}
+
+.auth-header__container {
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    gap: 45px;
+}
+
+.auth-header__logo {
+    max-width: 38px;
+    max-height: 38px;
+}
+
+.auth-header__logo:hover {
+    opacity: 0.8;
+}
+
+.auth-header__burger {
+    display: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background-color: inherit;
+}
+
+.auth-header__burger:hover {
+    opacity: 0.8;
+}
+
+.auth-header__burger_active {
+    position: fixed;
+    top: 22px;
+    right: 22px;
+}
+
+.auth-header__close-burger{
+    display: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background-color: inherit;
+}
+
+.auth-header__close-burger:hover {
+    opacity: 0.8;
+}
+
+@media screen and (max-width: 768px) {
+    .auth-header {
+        padding: 18px 30px;
+    }
+
+    .auth-header__burger {
+        display: flex;
+        background-color: inherit;
+    }
+
+    .auth-header__close-burger{
+        display: flex;
+        background: border-box;   
+    }
+
+    .auth-header__close-burger_active {
+        position: fixed;
+        top: 22px;
+        right: 22px;
+    }
+
+    .auth-header__open-burger_button-img {
+        width: 44px;
+        height: 44px;
+    }
+
+    .auth-header__close-burger_button-img {
+        width: 22px;
+        height: 22px;
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+    .auth-header {
+        padding: 18px 14px;
+    }
+}

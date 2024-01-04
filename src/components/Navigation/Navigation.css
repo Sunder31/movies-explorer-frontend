@@ -1,0 +1,124 @@
+.navigation {
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;   
+}
+
+.navigation__links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.navigation__link {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+.navigation__link:hover {
+    opacity: 0.8;
+}
+
+.navigation__profile {
+    width: 100px;
+    height: 32px;
+    text-decoration: none;
+    color: #FFFFFF;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+
+.navigation__profile:hover {
+    opacity: 0.8;
+}
+
+.navigation__profile-icon {
+    width: 26px;
+    height: 26px;
+    background-color: #0F4157;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+}
+
+.navigation__profile-icon_active {
+    background-color: #313131;
+}
+
+.navigation__link_burger {
+    font-size: 18px;
+    line-height: 22px;
+}
+
+@media screen and (max-width: 768px) {
+    .navigation {
+        display: none;
+    }
+
+    .navigation__active {
+        background-color: #202020;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        position: fixed;
+        max-width: 520px;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        padding: 159px 0 90px 0;
+        z-index: 2;
+    }
+
+    .navigation__active::before {
+        content: '';
+        opacity: 0.3;
+        background: #000000;
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: -1;
+    }
+
+    .navigation__links_active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+        height: 50px;
+    }
+
+    .navigation__link_active {
+        text-decoration: solid underline #FFFFFF 2px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .navigation__active {
+        padding: 144px 10px 46px 10px;
+    }
+
+    .navigation__links_active {
+        gap: 24px;
+    }
+}
