@@ -107,15 +107,12 @@
     background-color: #202020;
     border: none;
     cursor: pointer;
+    text-decoration: none;
+    color: #EE3465;
 }
 
 .profile__handle-logout:hover {
     opacity: 0.8;
-}
-
-.profile__handle-logout_link {
-    text-decoration: none;
-    color: #EE3465;
 }
 
 @media screen and (max-width: 768px) {

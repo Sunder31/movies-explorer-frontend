@@ -1,12 +1,16 @@
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import AuthHeader from '../AuthHeader/AuthHeader';
 
 function Movies() {
     return (
-        <main className='main'>
-            <SearchForm />
-            <MoviesCardList />
-        </main>
+        <>
+            <AuthHeader />
+            <main className='main'>
+                <SearchForm />
+                <MoviesCardList />
+            </main>
+        </>
     )
 }
 

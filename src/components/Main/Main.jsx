@@ -3,16 +3,23 @@ import NavTab from '../NavTab/NavTab';
 import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
+import AuthHeader from '../AuthHeader/AuthHeader';
+import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
 
-function Main() {
+function Main({ isLoggedIn }) {
     return(
-        <main className="main">
-            <Promo />
-            <NavTab />
-            <AboutProject />
-            <Techs />
-            <AboutMe />
-        </main>
+        <>
+        {isLoggedIn ? <Header /> : <AuthHeader />}
+            <main className="main">
+                <Promo />
+                <NavTab />
+                <AboutProject />
+                <Techs />
+                <AboutMe />
+            </main>
+            <Footer />
+        </>
     )
 }
 
