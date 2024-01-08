@@ -10,7 +10,6 @@ export const getResData = (res) => {
 
 export const register = (name, email, password) => {
     return fetch(`${baseUrl}/signup`, {
-        mode: 'no-cors',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -23,7 +22,6 @@ export const register = (name, email, password) => {
 
 export const login = (email, password) => {
     return fetch(`${baseUrl}/signin`, {
-        mode: 'no-cors',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -36,7 +34,6 @@ export const login = (email, password) => {
 
 export const checkToken = () => {
     return fetch(`${baseUrl}/users/me`, {
-        mode: 'no-cors',
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -49,7 +46,6 @@ export const checkToken = () => {
 
 export const logout = () => {
     return fetch(`${baseUrl}/logout `, {
-        mode: 'no-cors',
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -62,7 +58,6 @@ export const logout = () => {
 
 export const saveMovie = (movie) => {
     return fetch(`${baseUrl}/movies`, {
-        mode: 'no-cors',
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -88,7 +83,6 @@ export const saveMovie = (movie) => {
 
 export const deleteMovie = (movieId) => {
     return fetch(`${baseUrl}/movies/${movieId}`, {
-        mode: 'no-cors',
       method: 'DELETE',
       credentials: 'include',
       headers: {
@@ -101,7 +95,6 @@ export const deleteMovie = (movieId) => {
 
 export const getMovies = () => {
     return fetch(`${baseUrl}/movies`, {
-        mode: 'no-cors',
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -114,7 +107,6 @@ export const getMovies = () => {
 
 export const editUserInfo = (name, email) => {
     return fetch(`${baseUrl}/users/me`, {
-        mode: 'no-cors',
         method: 'PATCH',
         credentials: 'include',
         headers: {
