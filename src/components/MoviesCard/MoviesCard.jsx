@@ -1,13 +1,27 @@
-import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
-function MoviesCard({ movie }) {
-    const movieLink = movie.poster[Object.keys(movie.poster)]
+function MoviesCard({ movie, handleLikeState, deleteMovie, isLiked }) {
 
-    const [isLiked, setLike] = useState(false)
+    const movieImage = `https://api.nomoreparties.co/${movie.image.url}`;
+    const convertTime = (num) => {
+        const hours = num / 60
+        const roundHours = Math.floor(hours)
+        const minutes = Math.floor((hours - roundHours) * 60)
 
-    const handleLikeCard = () => {
-        setLike(!isLiked);
+        return roundHours === 0 ? `${minutes}м` : minutes === 0 ? `${roundHours}ч` : `${roundHours}ч ${minutes}м`
+    }
+
+    const handleLikeCard = (evt) => {
+        evt.preventDefault()
+
+        handleLikeState(movie, isLiked)
+    }
+
+    const handleDeleteCard = (evt) => {
+        evt.preventDefault()
+
+        isLiked = false
+        deleteMovie(movie._id)
     }
 
     const moviesLikeButtonClass = `movie__like-button ${
@@ -18,16 +32,16 @@ function MoviesCard({ movie }) {
 
     return (
         <>
-            <img src={movieLink} alt={movie.title} className="movie__image" />
+            <img src={location.pathname === '/movies' ? movieImage : movie.image} alt={movie.image.name} className="movie__image" />
             <div className="movie__container">
-                <h3 className="movie__title">{movie.title}</h3>
+                <h3 className="movie__title">{movie.nameRU}</h3>
                 {location.pathname === '/movies' ? (
                     <button type='button' onClick={handleLikeCard} className={moviesLikeButtonClass}></button>
                 ) : (
-                    <button type="button" className="movie__like-button movie__like-button_remove"></button>
+                    <button type="button" className="movie__like-button movie__like-button_remove" onClick={handleDeleteCard}></button>
                 )}
             </div>
-            <p className="movie__duration">{movie.duration}</p>
+            <p className="movie__duration">{convertTime(movie.duration)}</p>
         </>
     )
 }

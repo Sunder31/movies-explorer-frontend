@@ -46,7 +46,7 @@
     border: none;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
 }
 
 .register__input-container {
@@ -131,6 +131,31 @@
 
 .register__auth-link:hover {
     opacity: 0.8;
+}
+
+.register__error-text {
+    color: #EE3465;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 12px;
+    min-height: 10px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.register__input_error {
+    color: #EE3465;
+}
+
+.register__submit-btn_disabled {
+    background-color: #2f2f2f;
+    color: #adadb8;
+    cursor: not-allowed;
+}
+
+.register__submit-btn_disabled:hover {
+    opacity: 1;
 }
 
 @media screen and (max-width: 480px) {

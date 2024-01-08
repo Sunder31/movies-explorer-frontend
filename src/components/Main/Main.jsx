@@ -10,7 +10,7 @@ import Header from '../Header/Header';
 function Main({ isLoggedIn }) {
     return(
         <>
-        {isLoggedIn ? <Header /> : <AuthHeader />}
+        {isLoggedIn ? <AuthHeader /> : <Header />}
             <main className="main">
                 <Promo />
                 <NavTab />
