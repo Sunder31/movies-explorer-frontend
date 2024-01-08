@@ -20,7 +20,7 @@ function SearchForm({ inputValue, setInputValue, getMovies, filterMovies, allMov
         }
     }
 
-    const handleChangeInputValue = (evt) => {
+    const handleChange = (evt) => {
         setInputValue(evt.target.value)
     }
 
@@ -45,7 +45,7 @@ function SearchForm({ inputValue, setInputValue, getMovies, filterMovies, allMov
                     name='film'
                     required
                     value={inputValue}
-                    onChange={handleChangeInputValue}
+                    onChange={handleChange}
                     />
                     <button type='submit' className="search-form__button">
                         <img src={findMovieBtn} alt="кнопка поиска фильмов" className="search-form__button_img" />

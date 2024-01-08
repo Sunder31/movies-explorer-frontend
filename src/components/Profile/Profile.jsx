@@ -6,25 +6,19 @@ import useFormValidation from '../../hooks/useFormValidation';
 import * as mainApi from '../../utils/MainApi';
 import { EMAIL_REGEX_PATTERN } from "../../utils/constants";
 
-function Profile({ setLoggedIn, editUserInfo, isLoading }) {
+function Profile({ setLoggedIn, loadingErrorMessage, setLoadingErrorMessage, setLoadingError, isLoadingError, editUserInfo, isLoading, setChecked, formValues,setFormValues }) {
     
     const [isProfileEdit, setProfileEdit] = useState(false)
-    const [formValues, setFormValues] = useState({
-        'user-name': '',
-        'user-email': ''
-    })
     const [validation, handleValidation] = useFormValidation()
     const navigate = useNavigate();
     const currentUser = useContext(CurrentUserContext)
 
     useEffect(() => {
-        setFormValues({
-            'user-name': currentUser.name,
-            'user-email': currentUser.email
-        })
+        setLoadingError(false)
+        setLoadingErrorMessage('')
     },[])
     
-    const { isValid, errorMessage } = validation;
+    const { isValid, isInputValid, errorMessage } = validation;
 
     const name = formValues['user-name'];
     const email = formValues['user-email'];
@@ -44,6 +38,9 @@ function Profile({ setLoggedIn, editUserInfo, isLoading }) {
             ...formValues,
             [name]: value
         })
+
+        setLoadingError(false)
+        setLoadingErrorMessage('')
     }
 
     const handleLogout = () => {
@@ -52,6 +49,7 @@ function Profile({ setLoggedIn, editUserInfo, isLoading }) {
             .then(() => {
                 localStorage.clear()
                 setLoggedIn(false)
+                setChecked(false)
                 navigate('/', { replace: true })
             }).catch((err) => {
                 console.error(`Error: ${err.status} ${err.statusText}`)
@@ -82,7 +80,7 @@ function Profile({ setLoggedIn, editUserInfo, isLoading }) {
                             disabled={!isProfileEdit}
                             // defaultValue='Андрей'
                             placeholder='Введите имя'
-                            maxLength='20'
+                            maxLength='40'
                             minLength='2'
                             required
                             />
@@ -101,7 +99,7 @@ function Profile({ setLoggedIn, editUserInfo, isLoading }) {
                             disabled={!isProfileEdit}
                             // defaultValue='pochta@yandex.ru'
                             placeholder='Введите email'
-                            maxLength='20'
+                            maxLength='40'
                             minLength='2'
                             required
                             pattern={EMAIL_REGEX_PATTERN}
@@ -111,6 +109,9 @@ function Profile({ setLoggedIn, editUserInfo, isLoading }) {
                             {errorMessage['user-email']}
                         </span>
                         <div className="profile__handle-container">
+                            <span className="profile__error-msg">
+                                {loadingErrorMessage}
+                            </span>
                             {
                                 isProfileEdit ? (
                                     <button className={`register__submit-btn ${disabledButton ? 'register__submit-btn_disabled' : ''}`} type="submit" disabled={disabledButton}>

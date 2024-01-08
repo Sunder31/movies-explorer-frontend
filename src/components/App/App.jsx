@@ -13,20 +13,25 @@ import * as mainApi from '../../utils/MainApi';
 
 
 function App() {
-    const [isLoggedIn, setLoggedIn] = useState(false);
+    const isLoggedIn = localStorage.getItem('isLoggedIn')
+    const [loggedIn, setLoggedIn] = useState(isLoggedIn);
+    const [isLoading, setIsLoading] = useState(false);
     const [formValues, setFormValues] = useState({
         email: '',
         password: '',
     });
     const [currentUser, setCurrentUser] = useState({})
-    const [isLoading, setIsLoading] = useState(false);
     const [savedMovies, setSavedMovies] = useState([]);
-    const [isLoadingErr, setLoadingErr] = useState(false);
-    const [loadingErrMessage, setLoadingErrMessage] = useState('');
+    const [isLoadingError, setLoadingError] = useState(false);
+    const [loadingErrorMessage, setLoadingErrorMessage] = useState('');
     const [checked, setChecked] = useState(false);
-    const [isFiltered, setIsFiltered] = useState(false);
-    const [isFilteredSavedMovies, setFilteredSavedMovies] = useState([]);
-    
+    const [isFiltered, setFiltered] = useState(false);
+    const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
+    const [profileFormValues, setProfileFormValues] = useState({
+        'user-name': '',
+        'user-email': '',
+      });
+
     const navigate = useNavigate();
 
     const handleLogin = () => {
@@ -34,8 +39,6 @@ function App() {
     }
 
     useEffect(() => {
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
-
         if (isLoggedIn) {
             mainApi
                 .checkToken()
@@ -43,7 +46,10 @@ function App() {
                     if (res) {
                         setCurrentUser(res)
                         setLoggedIn(true)
-                        navigate('/movies', { replace: true })
+                        setProfileFormValues({
+                            'user-name': res.name,
+                            'user-email': res.email
+                        })
                     }
                 }).catch((err) => {
                     console.error(err)
@@ -56,7 +62,8 @@ function App() {
         mainApi
             .login(email, password)
             .then((res) => {
-                localStorage.getItem('isLoggedIn', true)
+                localStorage.setItem('isLoggedIn', true)
+                console.log(res)
                 setCurrentUser(res)
 
                 setFormValues({
@@ -64,15 +71,17 @@ function App() {
                     password: '',
                 })
                 handleLogin()
-                setLoadingErr(false)
-                setLoadingErrMessage('')
+                setLoadingError(false)
+                setLoadingErrorMessage('')
                 navigate('/movies', { replace: true })
             }).catch((err) => {
                 console.error(`Error: ${err.status} ${err.statusText}`)
                 if (err.status === 401) {
-                    setLoadingErrMessage('Неверный логин или пароль')
+                    setLoadingErrorMessage('Неверный логин или пароль')
+                } else {
+                    setLoadingErrorMessage('Ошибка при выполнении запроса')
                 }
-                setLoadingErr(true);
+                setLoadingError(true);
             })
             .finally(() => {
                 setIsLoading(false)
@@ -85,12 +94,12 @@ function App() {
             .register(name, email, password)
             .then(() => {
                 login(email, password)
-                setLoadingErr(false)
-                setLoadingErrMessage('')
+                setLoadingError(false)
+                setLoadingErrorMessage('')
             }).catch((err) => {
                 console.error(err)
-                setLoadingErrMessage('Ошибка при выполнении запроса')
-                setLoadingErr(true)
+                setLoadingError(true)
+                setLoadingErrorMessage('Ошибка при выполнении запроса')
             }).finally(() => {
                 setIsLoading(false)
             })
@@ -102,12 +111,12 @@ function App() {
             .editUserInfo(name, email)
             .then((res) => {
                 setCurrentUser(res)
-                setLoadingErr(false)
-                setLoadingErrMessage('')
+                setLoadingError(false)
+                setLoadingErrorMessage('')
             }).catch((err) => {
                 console.error(`Error: ${err.status} ${err.statusText}`)
-                setLoadingErrMessage('Ошибка при выполнении щзапроса')
-                setLoadingErr(true)
+                setLoadingError(true)
+                setLoadingErrorMessage('Ошибка при выполнении запроса')
             }).finally(() => {
                 setIsLoading(false)
             })
@@ -118,7 +127,7 @@ function App() {
             .deleteMovie(movieId)
             .then(() => {
                 setFilteredSavedMovies(
-                    isFilteredSavedMovies.filter((movie) => {
+                    filteredSavedMovies.filter((movie) => {
                         movie._id !== movieId
                     })
                 )
@@ -132,7 +141,7 @@ function App() {
             })
     }
 
-    const handleLikeState = (movie, isLiked) => {
+    const handleLikeStatus = (movie, isLiked) => {
         if (!isLiked) {
             mainApi
                 .saveMovie(movie)
@@ -157,63 +166,77 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Main isLoggedIn={isLoggedIn}/>}></Route>
                     <Route path="/movies" element={
-                        <ProtectedRoute element={
+                        // <ProtectedRoute element={
                             <Movies
                                 isLoading={isLoading}
                                 setIsLoading={setIsLoading}
-                                savedMovies={savedMovies}
                                 setSavedMovies={setSavedMovies}
-                                isLoadingErr={isLoadingErr}
-                                setLoadingErr={setLoadingErr}
-                                handleLikeState={handleLikeState}
+                                savedMovies={savedMovies}
+                                isLoadingError={isLoadingError}
+                                setLoadingError={setLoadingError}
+                                handleLikeStatus={handleLikeStatus}
                                 checked={checked}
                                 setChecked={setChecked}
                             />}
-                        />}
+                            loggedIn={loggedIn}
+                        // />}
                     />
                     <Route path="/profile" element={
-                        <ProtectedRoute element={
+                        // <ProtectedRoute element={
                             <Profile
                                 setLoggedIn={setLoggedIn}
-                                loadingErrMessage={loadingErrMessage}
-                                setLoadingErrMessage={setLoadingErrMessage}
-                                setLoadingErr={setLoadingErr}
-                                isLoadingErr={isLoadingErr}
+                                loadingErrorMessage={loadingErrorMessage}
+                                setLoadingErrorMessage={setLoadingErrorMessage}
+                                setLoadingError={setLoadingError}
+                                isLoadingError={isLoadingError}
                                 editUserInfo={editUserInfo}
                                 isLoading={isLoading}
+                                setChecked={setChecked}
+                                formValues={profileFormValues}
+                                setFormValues={setProfileFormValues}
                             />}
-                        />}
+                            loggedIn={loggedIn}
+                        // />}
                     />
                     <Route path="/saved-movies" element={
-                        <ProtectedRoute element={
+                        // <ProtectedRoute element={
                             <SavedMovies
                                 savedMovies={savedMovies}
                                 deleteMovie={deleteMovie}
                                 checked={checked}
                                 setChecked={setChecked}
                                 isFiltered={isFiltered}
-                                setIsFiltered={setIsFiltered}
-                                isFilteredSavedMovies={isFilteredSavedMovies}
+                                setFiltered={setFiltered}
+                                filteredSavedMovies={filteredSavedMovies}
                                 setFilteredSavedMovies={setFilteredSavedMovies}
                                 setSavedMovies={setSavedMovies}
                             />}
-                        />}
+                            loggedIn={loggedIn}
+                        // />}
                     />
                     <Route path="/*" element={<NotFoundPage />}></Route>
                     <Route path="/signin" element={<Login 
-                        loadingErrMessage={loadingErrMessage}
-                        setLoadingErrMessage={setLoadingErrMessage}
-                        isLoadingErr={isLoadingErr}
-                        setLoadingErr={setLoadingErr}
+                        loadingErrorMessage={loadingErrorMessage}
+                        setLoadingErrorMessage={setLoadingErrorMessage}
+                        isLoadingError={isLoadingError}
+                        setLoadingError={setLoadingError}
                         formValues={formValues}
                         setFormValues={setFormValues}
                         login={login}
                         isLoading={isLoading}
-                    />}></Route>
+                    />}
+                        loggedIn={!loggedIn}
+                    />
                     <Route path="/signup" element={<Register
+                        loadingErrorMessage={loadingErrorMessage}
+                        setLoadingErrorMessage={setLoadingErrorMessage}
+                        setLoadingError={setLoadingError}
+                        isLoadingError={isLoadingError}
                         register={register}
                         isLoading={isLoading}
-                    />}></Route>
+                    />}
+                        loggedIn={!loggedIn}
+                    />
                 </Routes>
             </div>
         </CurrentUserContext.Provider>

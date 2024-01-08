@@ -3,9 +3,8 @@ import { baseUrl } from './constants';
 export const getResData = (res) => {
     if (res.ok) {
         return res.json()
-    } else {
+    } 
         return Promise.reject(`Error: ${res.status}`)
-    }
 }
 
 export const register = (name, email, password) => {
@@ -34,7 +33,7 @@ export const login = (email, password) => {
 
 export const checkToken = () => {
     return fetch(`${baseUrl}/users/me`, {
-        method: 'POST',
+        method: 'GET',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
@@ -45,7 +44,7 @@ export const checkToken = () => {
 }
 
 export const logout = () => {
-    return fetch(`${baseUrl}/logout `, {
+    return fetch(`${baseUrl}/signout`, {
         method: 'GET',
         credentials: 'include',
         headers: {

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import headerLogo from '../../images/header__logo.svg';
 import useFormValidation from '../../hooks/useFormValidation';
 import { EMAIL_REGEX_PATTERN } from "../../utils/constants";
 
-function Register({ register, isLoading }) {
+function Register({ loadingErrorMessage, setLoadingErrorMessage, setLoadingError, register, isLoading }) {
     const [validation, handleValidation] = useFormValidation();
     
     const { isValid, isInputValid, errorMessage } = validation;
@@ -27,6 +27,10 @@ function Register({ register, isLoading }) {
             [name]: value
         })
     }
+
+    useEffect(() => {
+        setLoadingErrorMessage('')
+    }, [])
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
@@ -56,7 +60,7 @@ function Register({ register, isLoading }) {
                                 id="name"
                                 placeholder="Введите имя"
                                 minLength="2"
-                                maxLength="20"
+                                maxLength="40"
                                 required
                                 value={name}
                                 onChange={handleChange}
@@ -76,7 +80,7 @@ function Register({ register, isLoading }) {
                                 id="email"
                                 placeholder="Введите Email"
                                 minLength="2"
-                                maxLength="20"
+                                maxLength="40"
                                 required
                                 value={email}
                                 pattern={EMAIL_REGEX_PATTERN}
@@ -97,7 +101,7 @@ function Register({ register, isLoading }) {
                                 id="password"
                                 placeholder="Введите пароль"
                                 minLength="2"
-                                maxLength="20"
+                                maxLength="40"
                                 required
                                 value={password}
                                 onChange={handleChange}
@@ -106,6 +110,9 @@ function Register({ register, isLoading }) {
                                     {errorMessage.password}
                                 </span>
                             </div>
+                            <span className="registration__error-msg">
+                                {loadingErrorMessage}
+                            </span>
                         </div>
                         <button className={`register__submit-btn ${disabledButton ? 'register__submit-btn_disabled' : ''}`} type="submit" disabled={disabledButton}>
                             Зарегистрироваться

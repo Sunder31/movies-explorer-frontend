@@ -2,15 +2,16 @@ import { Link } from "react-router-dom";
 import headerLogo from '../../images/header__logo.svg';
 import useFormValidation from '../../hooks/useFormValidation';
 import { EMAIL_REGEX_PATTERN } from "../../utils/constants";
+import { useEffect } from "react";
 
-function Login({ loadingErrMessage, formValues, setFormValues, login, isLoading }) {
+function Login({ loadingErrorMessage, setLoadingErrorMessage, isLoadingError, setLoadingError, formValues, setFormValues, login, isLoading }) {
     const [validation, handleValidation] = useFormValidation();
     
     const { isValid, isInputValid, errorMessage } = validation;
 
     const disabledButton = !isValid || isLoading;
 
-    const { email, password} = formValues;
+    const { email, password } = formValues;
 
     const handleChange = (evt) => {
         const { name, value } = evt.target;
@@ -21,10 +22,15 @@ function Login({ loadingErrMessage, formValues, setFormValues, login, isLoading 
         })
     }
 
+    useEffect(() => {
+        setLoadingErrorMessage('')
+    }, [])
+
     const handleSubmit = (evt) => {
         evt.preventDefault();
             
         login(email, password)
+        console.log(email, password)
     }
 
     return (
@@ -77,8 +83,8 @@ function Login({ loadingErrMessage, formValues, setFormValues, login, isLoading 
                                     {errorMessage.password}
                                 </span>
                             </div>
-                            <span className="login__error-text">
-                                {loadingErrMessage}
+                            <span className="login__error-msg">
+                                {loadingErrorMessage}
                             </span>
                         </div>
                         <button className={`login__submit-btn ${disabledButton ? 'login__submit-btn_disabled' : ''}`} type="submit" disabled={disabledButton}>

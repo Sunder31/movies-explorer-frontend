@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 
-function MoviesCard({ movie, handleLikeState, deleteMovie, isLiked }) {
+function MoviesCard({ movie, handleLikeStatus, deleteMovie, isLiked }) {
 
     const movieImage = `https://api.nomoreparties.co/${movie.image.url}`;
     const convertTime = (num) => {
@@ -14,7 +14,7 @@ function MoviesCard({ movie, handleLikeState, deleteMovie, isLiked }) {
     const handleLikeCard = (evt) => {
         evt.preventDefault()
 
-        handleLikeState(movie, isLiked)
+        handleLikeStatus(movie, isLiked)
     }
 
     const handleDeleteCard = (evt) => {
