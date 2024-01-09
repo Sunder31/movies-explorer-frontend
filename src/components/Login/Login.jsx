@@ -4,7 +4,7 @@ import useFormValidation from '../../hooks/useFormValidation';
 import { EMAIL_REGEX_PATTERN } from "../../utils/constants";
 import { useEffect } from "react";
 
-function Login({ loadingErrorMessage, setLoadingErrorMessage, isLoadingError, setLoadingError, formValues, setFormValues, login, isLoading }) {
+function Login({ loadingErrorMessage, setLoadingErrorMessage, formValues, setFormValues, login, isLoading }) {
     const [validation, handleValidation] = useFormValidation();
     
     const { isValid, isInputValid, errorMessage } = validation;
@@ -29,8 +29,7 @@ function Login({ loadingErrorMessage, setLoadingErrorMessage, isLoadingError, se
     const handleSubmit = (evt) => {
         evt.preventDefault();
             
-        login(email, password)
-        console.log(email, password)
+        login(email, password);
     }
 
     return (

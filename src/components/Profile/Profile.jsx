@@ -6,7 +6,7 @@ import useFormValidation from '../../hooks/useFormValidation';
 import * as mainApi from '../../utils/MainApi';
 import { EMAIL_REGEX_PATTERN } from "../../utils/constants";
 
-function Profile({ setLoggedIn, loadingErrorMessage, setLoadingErrorMessage, setLoadingError, isLoadingError, editUserInfo, isLoading, setChecked, formValues,setFormValues }) {
+function Profile({ setLoggedIn, loadingErrorMessage, setLoadingErrorMessage, setLoadingError, editUserInfo, isLoading, setChecked, formValues,setFormValues }) {
     
     const [isProfileEdit, setProfileEdit] = useState(false)
     const [validation, handleValidation] = useFormValidation()
@@ -18,7 +18,7 @@ function Profile({ setLoggedIn, loadingErrorMessage, setLoadingErrorMessage, set
         setLoadingErrorMessage('')
     },[])
     
-    const { isValid, isInputValid, errorMessage } = validation;
+    const { isValid, errorMessage } = validation;
 
     const name = formValues['user-name'];
     const email = formValues['user-email'];

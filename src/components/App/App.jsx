@@ -35,7 +35,7 @@ function App() {
     const navigate = useNavigate();
 
     const handleLogin = () => {
-        setLoggedIn(true);
+        setLoggedIn(true)
     }
 
     useEffect(() => {
@@ -63,7 +63,6 @@ function App() {
             .login(email, password)
             .then((res) => {
                 localStorage.setItem('isLoggedIn', true)
-                console.log(res)
                 setCurrentUser(res)
 
                 setFormValues({
@@ -122,23 +121,27 @@ function App() {
             })
     }
 
-    const deleteMovie = (movieId) => {
+    const deleteMovie = (deleteMovieId) => {
         mainApi
-            .deleteMovie(movieId)
+            .deleteMovie(deleteMovieId)
             .then(() => {
                 setFilteredSavedMovies(
                     filteredSavedMovies.filter((movie) => {
-                        movie._id !== movieId
+                        console.log(movie)
+                        movie._id !== deleteMovieId
                     })
                 )
                 setSavedMovies(
                     savedMovies.filter((movie) => {
-                        movie._id !== movieId
+                        console.log(movie)
+                        movie._id !== deleteMovieId
                     })
                 )
             }).catch((err) => {
                 console.error(`Error: ${err.status} ${err.statusText}`)
             })
+            console.log(filteredSavedMovies)
+            console.log(savedMovies)
     }
 
     const handleLikeStatus = (movie, isLiked) => {
@@ -166,7 +169,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Main isLoggedIn={isLoggedIn}/>}></Route>
                     <Route path="/movies" element={
-                        // <ProtectedRoute element={
+                        <ProtectedRoute element={
                             <Movies
                                 isLoading={isLoading}
                                 setIsLoading={setIsLoading}
@@ -179,10 +182,10 @@ function App() {
                                 setChecked={setChecked}
                             />}
                             loggedIn={loggedIn}
-                        // />}
+                        />}
                     />
                     <Route path="/profile" element={
-                        // <ProtectedRoute element={
+                        <ProtectedRoute element={
                             <Profile
                                 setLoggedIn={setLoggedIn}
                                 loadingErrorMessage={loadingErrorMessage}
@@ -196,10 +199,10 @@ function App() {
                                 setFormValues={setProfileFormValues}
                             />}
                             loggedIn={loggedIn}
-                        // />}
+                        />}
                     />
                     <Route path="/saved-movies" element={
-                        // <ProtectedRoute element={
+                        <ProtectedRoute element={
                             <SavedMovies
                                 savedMovies={savedMovies}
                                 deleteMovie={deleteMovie}
@@ -212,7 +215,7 @@ function App() {
                                 setSavedMovies={setSavedMovies}
                             />}
                             loggedIn={loggedIn}
-                        // />}
+                        />}
                     />
                     <Route path="/*" element={<NotFoundPage />}></Route>
                     <Route path="/signin" element={<Login 

@@ -16,7 +16,7 @@ function MoviesCardList({ movies, isLoading, isLoadingError, isFirstEntrance, ha
             )
 
             return (
-                <li className="movie" key={movie.id}>
+                <li className="movie" key={movie.id || movie.movieId}>
                     <a href={movie.trailerLink} className="movie__trailer">
                         <MoviesCard
                             movie={movie}

@@ -22,6 +22,7 @@ export const register = (name, email, password) => {
 export const login = (email, password) => {
     return fetch(`${baseUrl}/signin`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -45,7 +46,7 @@ export const checkToken = () => {
 
 export const logout = () => {
     return fetch(`${baseUrl}/signout`, {
-        method: 'GET',
+        method: 'POST',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
@@ -56,6 +57,7 @@ export const logout = () => {
 }
 
 export const saveMovie = (movie) => {
+    console.log(movie)
     return fetch(`${baseUrl}/movies`, {
         method: 'POST',
         credentials: 'include',

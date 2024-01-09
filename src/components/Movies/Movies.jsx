@@ -72,7 +72,8 @@ function Movies({ isLoading, setIsLoading, setSavedMovies, savedMovies, isLoadin
             
             setInputValue(inputValue)
             setChecked(checked)
-            setFilteredMovies(movies, checked, inputValue)
+            setFilteredMovies(movies)
+            filterMovies(movies, checked, inputValue)
         }
     }, [filterMovies])
 
@@ -81,9 +82,8 @@ function Movies({ isLoading, setIsLoading, setSavedMovies, savedMovies, isLoadin
             .getMovies()
             .then((res) => {
                 setSavedMovies(res.reverse())
-                .catch((err) => {
+                }).catch((err) => {
                     console.error(`Error: ${err.status} ${err.statusText}`)
-                })
             })
     }, [])
 
@@ -110,10 +110,6 @@ function Movies({ isLoading, setIsLoading, setSavedMovies, savedMovies, isLoadin
             filterMovies(allMovies, checked, inputValue)
         }
     }
-
-
-
-
 
     return (
         <>

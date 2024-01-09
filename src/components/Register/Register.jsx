@@ -4,7 +4,7 @@ import headerLogo from '../../images/header__logo.svg';
 import useFormValidation from '../../hooks/useFormValidation';
 import { EMAIL_REGEX_PATTERN } from "../../utils/constants";
 
-function Register({ loadingErrorMessage, setLoadingErrorMessage, setLoadingError, register, isLoading }) {
+function Register({ loadingErrorMessage, setLoadingErrorMessage, register, isLoading }) {
     const [validation, handleValidation] = useFormValidation();
     
     const { isValid, isInputValid, errorMessage } = validation;
