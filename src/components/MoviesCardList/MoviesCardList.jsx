@@ -9,14 +9,15 @@ function MoviesCardList({ movies, isLoading, isLoadingError, isFirstEntrance, ha
     const modifiedMoviesArr = movies.slice(0, count)
 
     const renderMovies = (moviesArr) => {
+        
+        const savedMoviesIds = savedMovies.map((savedMovie) => savedMovie.id)
+        
         return moviesArr.map((movie) => {
-            const isLiked = savedMovies.some((savedMovie) => {
-                    savedMovie.id === movie.id
-                }
-            )
+
+            const isLiked = savedMoviesIds.includes(movie.id)
 
             return (
-                <li className="movie" key={movie.id || movie.movieId}>
+                <li className="movie" key={movie.id}>
                     <a href={movie.trailerLink} className="movie__trailer">
                         <MoviesCard
                             movie={movie}

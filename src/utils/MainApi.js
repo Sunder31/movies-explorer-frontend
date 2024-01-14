@@ -57,7 +57,6 @@ export const logout = () => {
 }
 
 export const saveMovie = (movie) => {
-    console.log(movie)
     return fetch(`${baseUrl}/movies`, {
         method: 'POST',
         credentials: 'include',
@@ -73,7 +72,7 @@ export const saveMovie = (movie) => {
             image: `https://api.nomoreparties.co${movie.image.url}`,
             thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
             trailerLink: movie.trailerLink,
-            movieId: movie.id,
+            id: movie.id,
             nameRU: movie.nameRU,
             nameEN: movie.nameEN
         })

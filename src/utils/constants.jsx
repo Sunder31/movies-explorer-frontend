@@ -8,5 +8,5 @@ export const middleScreenMoviesCount = 8;
 export const minScreenMoviesCount = 5;
 export const largeMoviesStep = 3;
 export const smallMoviesStep = 2;
-export const middleScreenWidth = 1087;
-export const smallScreenWidth = 633;
+export const middleScreenWidth = 768;
+export const smallScreenWidth = 480;

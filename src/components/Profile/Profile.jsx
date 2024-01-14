@@ -6,14 +6,15 @@ import useFormValidation from '../../hooks/useFormValidation';
 import * as mainApi from '../../utils/MainApi';
 import { EMAIL_REGEX_PATTERN } from "../../utils/constants";
 
-function Profile({ setLoggedIn, loadingErrorMessage, setLoadingErrorMessage, setLoadingError, editUserInfo, isLoading, setChecked, formValues,setFormValues }) {
+function Profile({ setLoggedIn, loadingErrorMessage, isLoadingSuccess, setLoadingSuccess, setLoadingErrorMessage, setLoadingError, editUserInfo, isLoading, setChecked, formValues,setFormValues }) {
     
     const [isProfileEdit, setProfileEdit] = useState(false)
     const [validation, handleValidation] = useFormValidation()
     const navigate = useNavigate();
     const currentUser = useContext(CurrentUserContext)
-
+    console.log(formValues)
     useEffect(() => {
+        setLoadingSuccess(false)
         setLoadingError(false)
         setLoadingErrorMessage('')
     },[])
@@ -39,6 +40,7 @@ function Profile({ setLoggedIn, loadingErrorMessage, setLoadingErrorMessage, set
             [name]: value
         })
 
+        setLoadingSuccess(false)
         setLoadingError(false)
         setLoadingErrorMessage('')
     }
@@ -109,9 +111,14 @@ function Profile({ setLoggedIn, loadingErrorMessage, setLoadingErrorMessage, set
                             {errorMessage['user-email']}
                         </span>
                         <div className="profile__handle-container">
+                           {!isLoadingSuccess ? (
                             <span className="profile__error-msg">
                                 {loadingErrorMessage}
                             </span>
+                           ) :  <span className="profile__success-msg">
+                                    Данные изменены!
+                                </span>
+                                }
                             {
                                 isProfileEdit ? (
                                     <button className={`register__submit-btn ${disabledButton ? 'register__submit-btn_disabled' : ''}`} type="submit" disabled={disabledButton}>

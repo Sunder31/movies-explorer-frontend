@@ -92,4 +92,8 @@
     .movie__image {
         height: 168px;
     }
+    
+    .movie__like-button_remove {
+        display: flex;
+    }
 }

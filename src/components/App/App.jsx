@@ -22,6 +22,7 @@ function App() {
     });
     const [currentUser, setCurrentUser] = useState({})
     const [savedMovies, setSavedMovies] = useState([]);
+    const [isLoadingSuccess, setLoadingSuccess] = useState('')
     const [isLoadingError, setLoadingError] = useState(false);
     const [loadingErrorMessage, setLoadingErrorMessage] = useState('');
     const [checked, setChecked] = useState(false);
@@ -64,7 +65,10 @@ function App() {
             .then((res) => {
                 localStorage.setItem('isLoggedIn', true)
                 setCurrentUser(res)
-
+                setProfileFormValues({
+                    'user-name': res.name,
+                    'user-email': res.email
+                })
                 setFormValues({
                     email: '',
                     password: '',
@@ -109,11 +113,13 @@ function App() {
         mainApi
             .editUserInfo(name, email)
             .then((res) => {
+                setLoadingSuccess(true)
                 setCurrentUser(res)
                 setLoadingError(false)
                 setLoadingErrorMessage('')
             }).catch((err) => {
                 console.error(`Error: ${err.status} ${err.statusText}`)
+                setLoadingSuccess(false)
                 setLoadingError(true)
                 setLoadingErrorMessage('Ошибка при выполнении запроса')
             }).finally(() => {
@@ -126,22 +132,16 @@ function App() {
             .deleteMovie(deleteMovieId)
             .then(() => {
                 setFilteredSavedMovies(
-                    filteredSavedMovies.filter((movie) => {
-                        console.log(movie)
-                        movie._id !== deleteMovieId
-                    })
+                    filteredSavedMovies.filter((movie) => movie._id !== deleteMovieId
+                    )
                 )
                 setSavedMovies(
-                    savedMovies.filter((movie) => {
-                        console.log(movie)
-                        movie._id !== deleteMovieId
-                    })
+                    savedMovies.filter((movie) => movie._id !== deleteMovieId
+                    )
                 )
             }).catch((err) => {
                 console.error(`Error: ${err.status} ${err.statusText}`)
             })
-            console.log(filteredSavedMovies)
-            console.log(savedMovies)
     }
 
     const handleLikeStatus = (movie, isLiked) => {
@@ -154,12 +154,14 @@ function App() {
                     console.error(`Error: ${err.status} ${err.statusText}`)
                 })
         } else {
-            const currentMovie = savedMovies.filter(
-                (savedMovie) => {
-                    savedMovie.id === movie.id
+
+            let movieToDelete = null
+            savedMovies.forEach((savedMovie) => {
+                if (savedMovie.id === movie.id){
+                    movieToDelete = savedMovie
                 }
-            )
-            deleteMovie(currentMovie[0]._id)
+            })
+            deleteMovie(movieToDelete._id)
         }
     }
 
@@ -195,6 +197,8 @@ function App() {
                                 editUserInfo={editUserInfo}
                                 isLoading={isLoading}
                                 setChecked={setChecked}
+                                isLoadingSuccess={isLoadingSuccess}
+                                setLoadingSuccess={setLoadingSuccess}
                                 formValues={profileFormValues}
                                 setFormValues={setProfileFormValues}
                             />}

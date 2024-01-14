@@ -13,7 +13,7 @@ function MoviesCard({ movie, handleLikeStatus, deleteMovie, isLiked }) {
 
     const handleLikeCard = (evt) => {
         evt.preventDefault()
-
+        
         handleLikeStatus(movie, isLiked)
     }
 
