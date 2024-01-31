@@ -133,6 +133,42 @@
     opacity: 0.8;
 }
 
+.login__error-text {
+    color: #EE3465;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 12px;
+    min-height: 10px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.login__input_error {
+    color: #EE3465;
+}
+
+.login__submit-btn_disabled {
+    background-color: #2f2f2f;
+    color: #adadb8;
+    cursor: not-allowed;
+}
+
+.login__submit-btn_disabled:hover {
+    opacity: 1;
+}
+
+.login__error-msg {
+    color: #EE3465;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    margin: 0;
+    text-align: center;
+}
+
 @media screen and (max-width: 480px) {
     .login__container {
         max-width: 320px;
